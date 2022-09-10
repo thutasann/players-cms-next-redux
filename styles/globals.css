@@ -15,6 +15,48 @@ a {
   text-decoration: none;
 }
 
+.flexBox{
+  display: flex;
+  align-items: center;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+label{
+  margin-bottom: 10px;
+}
+
+input{
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+}
+
+button{
+  background-color: #007bff;
+  outline: none;
+  border: none;
+  width: 90px;
+  height: 40px;
+  border-radius: 13px;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.logoutBtn{
+  margin-top: 0;
+  margin-left: 20px;
+}
+
+button:hover{
+  background-color: #0c81ff79;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -27,4 +69,9 @@ a {
     color: white;
     background: black;
   }
+}
+
+
+.info{
+  color: skyblue;
 }

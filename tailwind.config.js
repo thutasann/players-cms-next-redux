@@ -1,8 +1,14 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'bg-apple-black-board': '#1a1a1a',
+        'bg-apple-black': '#010101',
+      }
+    },
   },
-  plugins: [],
 }
