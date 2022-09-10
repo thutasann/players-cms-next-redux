@@ -16,6 +16,7 @@ const Modal = ({ setOpenModal, players }) => {
     const addTeam = (e) => {
         e.preventDefault();
         console.log(existed);
+        alert("Sill in Beta Version xD")
     }
 
     
