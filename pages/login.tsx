@@ -78,19 +78,19 @@ const Login = () => {
                         }}
                     />
 
-                <label>Email</label>
-                <input
-                    type="email"
-                    value={email}
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        placeholder="Enter Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-                <button
-                    onClick={loginSubmit}
-                >
-                    {loading ? "Loading..." : "Login"}
-                </button>
+                    <button
+                        onClick={loginSubmit}
+                    >
+                        {loading ? "Loading..." : "Login"}
+                    </button>
             </form>
         </div>
     )
