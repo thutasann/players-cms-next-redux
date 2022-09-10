@@ -65,12 +65,12 @@ export default function Home({players}) {
           >
             <h1 className='info'>Login to view Players List</h1>
             <Image
-              src="/bicycle-kick.gif"
+              src="/ronaldo.jpeg"
               width={850}
-              height={550}
+              height={490}
               alt="Ronaldo Bicycle Kick"
               placeholder='blur'
-              blurDataURL='/bicycle-kick.gif'
+              blurDataURL='/ronaldo.jpeg'
               loading="lazy"
             />
           </div>
