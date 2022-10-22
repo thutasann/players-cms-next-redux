@@ -46,7 +46,7 @@ const Login = () => {
             
         >
             <Head>
-                <title>Login | Players</title>
+                <title>Login | Player CMS</title>
                 <link rel="icon" type="image/png" href="/logo.jpeg" sizes="16x16" />
             </Head>
 

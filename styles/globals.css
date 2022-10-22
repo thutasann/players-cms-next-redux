@@ -14,7 +14,7 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 li{
@@ -103,7 +103,7 @@ img{
   width: 100vw;
   height: 120vh;
   background-color: rgb(33, 32, 32);
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   display: flex;
@@ -114,7 +114,7 @@ img{
 .modalContainer {
   position: absolute;
   width: 500px;
-  height: 670px;
+  height: 100vh;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

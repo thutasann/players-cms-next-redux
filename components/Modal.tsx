@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { count } from 'console';
 import React, { useState } from 'react'
 
 
@@ -15,8 +17,10 @@ const Modal = ({ setOpenModal, players }) => {
 
     const addTeam = (e) => {
         e.preventDefault();
-        console.log(existed);
-        alert("Sill in Beta Version xD")
+        const values = { name, playerCount, region, country};
+        axios.post("https://www.balldontlie.io/api/v1/teams", values)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     }
 
     
@@ -63,11 +67,11 @@ const Modal = ({ setOpenModal, players }) => {
                         onChange={(e) => setRegion(e.target.value)}
                     />
 
-                    <label style={{marginTop: '30px', color: 'black'}}>Player Count</label>
+                    <label style={{marginTop: '30px', color: 'black'}}>Country</label>
                     <input
                         type="text"
                         value={country}
-                        placeholder="Enter Player Count"
+                        placeholder="Enter Country"
                         onChange={(e) => setCountry(e.target.value)}
                     />
 
