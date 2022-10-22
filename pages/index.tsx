@@ -1,20 +1,19 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { login, selectUser, logout } from '../slices/userSlice';
-import Modal from '../components/Modal';
+import { selectUser, logout } from '../slices/userSlice';
 import usePagination from '../components/usePagination';
 
-export default function Home({players, meta}) {
+export default function Home({players}) {
 
+  // Load More
   const { next, currentPage, currentData, maxPage } = usePagination(
     players,
     10
   );
-  const currentPosts = currentData();
+  const currentPlayers = currentData();
   const [element, setElement] = useState(null);
   const observer = useRef<IntersectionObserver>();
   const prevY = useRef(0);
@@ -52,8 +51,6 @@ export default function Home({players, meta}) {
   // users
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [ openModal, setOpenModal ] = useState(false);
-  // users
   
 
   const logoutSubmit = () => {
@@ -81,13 +78,26 @@ export default function Home({players, meta}) {
         {
           user ? (
             <div className='flexBox'>           
-              <p> 🙋🏼‍♂️ {user.displayName}</p>
-              <span 
-                onClick={logoutSubmit}
-                className='underline'
-              >
-                Logout
-              </span>
+              
+              <div>
+                <Link 
+                    href='/teams'
+                  >
+                  ⚽ View Teams
+                </Link>
+              </div>
+
+              <p> 
+                🙋🏼‍♂️ {user.displayName}
+                <span 
+                  onClick={logoutSubmit}
+                  className='underline'
+                >
+                  Logout
+                </span>
+              </p>
+              
+              
             </div>
 
           ) : (
@@ -98,31 +108,6 @@ export default function Home({players, meta}) {
         }
 
       </div>
-
-      {/* add team modal button */}
-      {
-        user && (
-          <div>
-            <button
-              onClick={() => setOpenModal(true)}
-              style={{
-                marginLeft: "30px",
-                marginTop: "20px",
-                marginRight: '30px'
-              }}
-            >
-              Add Team
-            </button>
-
-            <Link 
-              href='/teams'
-            >
-              View Teams
-            </Link>
-          </div>
-        )
-      }
-      
 
       {/* Players list */}
       {
@@ -144,22 +129,25 @@ export default function Home({players, meta}) {
             />
           </div>
         ) : (
-          <div style={{ marginLeft: "30px"}}>
-            <h3>Players</h3>
-            <ol>
+          <div style={{ marginLeft: "30px", marginTop: "30px"}}>
+            <h3>Players ({players?.length})</h3>
+            <div className='container' style={{ margin: 0}}>
               {
-                currentPosts.map((player, i) => {
+                currentPlayers.map((player, i) => {
                   return(
-                    <li key={i} className="text-red-500">
-                      {player.first_name}
-                    </li>
+                    <div className='card' key={i}>
+                      <h4>
+                        <b>{player.first_name + player.last_name}</b>
+                      </h4>
+                      <p>Team : {player.team.full_name}</p>
+                    </div>
                   )
                 })
               }
-            </ol>
+            </div>
             <button
-              onClick={() => next()}
-            >
+                onClick={() => next()}
+              >
               More...
             </button>
 
@@ -168,11 +156,7 @@ export default function Home({players, meta}) {
         )
       }
 
-      {
-        openModal && (
-          <Modal setOpenModal={setOpenModal} players={players} />
-        )
-      }
+      
 
 
     </div>

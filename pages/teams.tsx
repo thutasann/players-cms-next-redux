@@ -2,15 +2,18 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from '../components/Modal';
 import { selectUser } from '../slices/userSlice';
 
 const Teams = ({ teams }) => {
 
-    const router = useRouter();
+    console.log(teams);
+
     const user = useSelector(selectUser);
-    const dispatch = useDispatch();
+    const [ openModal, setOpenModal ] = useState(false);
+
     
     return (
         <div>
@@ -19,55 +22,81 @@ const Teams = ({ teams }) => {
                 <title>Teams | Player CMS</title>
                 <link rel="icon" type="image/png" href="/logo.jpeg" sizes="16x16" />
             </Head>
-
-
+            
             <div
                 style={{
                     marginLeft: '30px',
                     marginTop: "20px",
                     marginBottom: "30px"
                 }}
+                className="flexBox"
             >
                 <Link 
                     href='/'
-                    
                 >
-                    Back Home
+                    🏃🏾 Back To Players
                 </Link>
-                <h3>Teams</h3>
+                <button
+                    onClick={() => setOpenModal(true)}
+                    style={{
+                        marginLeft: "30px",
+                        marginTop: "20px",
+                        marginRight: '30px'
+                    }}
+                >
+                    Add Team
+                </button>
+                
             </div>
 
             {/* Teams list */}
+            <h3>Teams ({teams.length})</h3>
+
             {
                 !user? (
                     <div
-                    style={{
-                        marginLeft: '30px'
-                    }}
-                >
-                    <h1 className='info'>Login to manage Teams and Players</h1>
-                    <Image
-                    src="/ronaldo.jpeg"
-                    width={850}
-                    height={490}
-                    alt="Ronaldo Bicycle Kick"
-                    placeholder='blur'
-                    blurDataURL='/ronaldo.jpeg'
-                    loading="lazy"
-                    />
-                </div>
+                        style={{
+                            marginLeft: '30px'
+                        }}
+                    >
+                        <h1 className='info'>Login to manage Teams and Players</h1>
+                        <Image
+                        src="/ronaldo.jpeg"
+                        width={850}
+                        height={490}
+                        alt="Ronaldo Bicycle Kick"
+                        placeholder='blur'
+                        blurDataURL='/ronaldo.jpeg'
+                        loading="lazy"
+                        />
+                    </div>
                 ) : (
-                    <ol>
+                    <div className='container'>
                         {
                             teams.map((team, i) => {
                                 return (
-                                    <li key={i}>
-                                        {team.full_name}
-                                    </li>
+                                    <div className="card" key={i}>
+                                        <h4>
+                                            <b>{team.full_name}</b>
+                                            <span className='danger'>🗑️ Delete</span>
+                                        </h4>
+                                        <p>City : {team.city}</p>
+                                        <p>Divistion: {team.division}</p>
+                                        <button>
+                                            View Detail
+                                        </button>
+                                    </div>
+
                                 )
                             })
                         }
-                    </ol>
+                    </div>
+                )
+            }
+
+            {
+                openModal && (
+                    <Modal setOpenModal={setOpenModal}/>
                 )
             }
 
