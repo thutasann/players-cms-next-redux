@@ -111,7 +111,6 @@ const Teams = ({ teams, players }) => {
                                             <p>Player Count : {team.playerCount}</p>
                                             <p>Region: {team.region}</p>
                                             <p>Country: {team.country}</p>
-                                            <p>Player: {team.player? team.player : "---"}</p>
                                             <button>
                                                 View Detail
                                             </button>
@@ -138,9 +137,6 @@ const Teams = ({ teams, players }) => {
                                             </h4>
                                             <p>City : {team.city}</p>
                                             <p>Divistion: {team.division}</p>
-                                            <button>
-                                                View Detail
-                                            </button>
                                         </div>
 
                                     )

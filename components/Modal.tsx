@@ -1,16 +1,27 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addTeam } from '../slices/teamSlice';
+import { MultiSelect } from "react-multi-select-component";
 
 
 const Modal = ({ setOpenModal, players }) => {
 
     const dispatch = useDispatch();
     const [ name, setName ] = useState('');
-    const [ playerCount, setPlayerCount ] = useState('');
     const [ region, setRegion ] = useState('');
     const [ country, setCountry ] = useState('');
-    const [ player, setPlayer ] = useState('');
+
+    const options = players.map((player) => {
+        return{
+            label: player.first_name,
+            value: player.first_name
+        }
+    });
+
+    const [ player, setPlayer] = useState([]);
+    const playerCount: any = player.length;
+
+
 
     // const validation = () => {
     //     players.filter(player => name.includes(player.team.name) ? setExisted(true): setExisted(false))
@@ -19,8 +30,20 @@ const Modal = ({ setOpenModal, players }) => {
     const addTeamSubmit = (e) => {
         e.preventDefault();
         const values = { name, playerCount, region, country, player};
-        dispatch(addTeam(values));
-        setOpenModal(false);
+        if(
+            values.name == '' || values.name == undefined ||
+            values.playerCount == '' || values.playerCount == undefined ||
+            values.region == '' || values.region == undefined ||
+            values.country == '' || values.country == undefined ||
+            values.player == [] || values.player == undefined
+        ){
+            alert("Please enter all Inqueries carefully!");
+        }else {
+            console.log("payload", values);
+            dispatch(addTeam(values));
+            setOpenModal(false);
+        }
+        
     }
 
 
@@ -50,14 +73,6 @@ const Modal = ({ setOpenModal, players }) => {
                         onChange={(e) => setName(e.target.value)}
                     />
 
-                    <label style={{marginTop: '30px', color: 'black'}}>Player Count</label>
-                    <input
-                        type="text"
-                        value={playerCount}
-                        placeholder="Enter Player Count"
-                        onChange={(e) => setPlayerCount(e.target.value)}
-                    />
-
                     <label style={{marginTop: '30px', color: 'black'}}>Region</label>
                     <input
                         type="text"
@@ -74,19 +89,14 @@ const Modal = ({ setOpenModal, players }) => {
                         onChange={(e) => setCountry(e.target.value)}
                     />
 
-                    <label style={{marginTop: '30px', color: 'black'}}>Picke Player</label>
-                    <select value={player} onChange={(e) => setPlayer(e.target.value)}>
-                        {
-                            players.map((player , i) => (
-                                <option 
-                                    key={i}
-                                    value={player.first_name}
-                                >
-                                    {player.first_name}
-                                </option>
-                            ))
-                        }
-                    </select>
+                    <label style={{marginTop: '30px', color: 'black'}}>Picke Players</label>
+                    <MultiSelect
+                        options={options}
+                        value={player}
+                        onChange={setPlayer}
+                        labelledBy="Select"
+                    />
+
 
                 </form>
 
