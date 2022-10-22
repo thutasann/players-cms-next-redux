@@ -114,10 +114,11 @@ export default function Home({players}) {
         !user ? (
           <div
             style={{
-              marginLeft: '30px'
+              marginLeft: '30px',
+              marginTop:  "30px"
             }}
           >
-            <h1 className='info'>Login to manage Teams and Players</h1>
+            <h1 className='info' style={{ textAlign: 'left'}}>Login to manage Teams and Players</h1>
             <Image
               src="/ronaldo.jpeg"
               width={850}

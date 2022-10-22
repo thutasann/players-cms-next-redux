@@ -29,6 +29,11 @@ li{
   margin: 20px;
 }
 
+.textLeft{
+  text-align: left;
+  margin-left: 30px;
+}
+
 a:hover{
   text-decoration: underline;
 }
@@ -42,7 +47,8 @@ label{
   margin-bottom: 10px;
 }
 
-input{
+input,
+select{
   padding: 10px;
   border: none;
   outline: none;
@@ -116,12 +122,13 @@ img{
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .modalContainer {
   position: absolute;
   width: 500px;
-  height: 100vh;
+  margin-top: -130px;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

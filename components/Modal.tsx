@@ -1,29 +1,28 @@
-import axios from 'axios';
-import { count } from 'console';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { addTeam } from '../slices/teamSlice';
 
 
 const Modal = ({ setOpenModal, players }) => {
 
-    const [ existed, setExisted ] = useState(false);
+    const dispatch = useDispatch();
     const [ name, setName ] = useState('');
     const [ playerCount, setPlayerCount ] = useState('');
     const [ region, setRegion ] = useState('');
     const [ country, setCountry ] = useState('');
+    const [ player, setPlayer ] = useState('');
 
-    const validation = () => {
-        players.filter(player => name.includes(player.team.name) ? setExisted(true): setExisted(false))
-    }
+    // const validation = () => {
+    //     players.filter(player => name.includes(player.team.name) ? setExisted(true): setExisted(false))
+    // }
 
-    const addTeam = (e) => {
+    const addTeamSubmit = (e) => {
         e.preventDefault();
-        const values = { name, playerCount, region, country};
-        axios.post("https://www.balldontlie.io/api/v1/teams", values)
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+        const values = { name, playerCount, region, country, player};
+        dispatch(addTeam(values));
+        setOpenModal(false);
     }
 
-    
 
     return (
         <div className="modalBackground">
@@ -75,6 +74,20 @@ const Modal = ({ setOpenModal, players }) => {
                         onChange={(e) => setCountry(e.target.value)}
                     />
 
+                    <label style={{marginTop: '30px', color: 'black'}}>Picke Player</label>
+                    <select value={player} onChange={(e) => setPlayer(e.target.value)}>
+                        {
+                            players.map((player , i) => (
+                                <option 
+                                    key={i}
+                                    value={player.first_name}
+                                >
+                                    {player.first_name}
+                                </option>
+                            ))
+                        }
+                    </select>
+
                 </form>
 
 
@@ -88,7 +101,7 @@ const Modal = ({ setOpenModal, players }) => {
                     Cancel
                     </button>
                     <button
-                        onClick={addTeam}
+                        onClick={addTeamSubmit}
                     >
                         Add Team
                     </button>
