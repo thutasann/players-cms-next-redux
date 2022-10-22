@@ -20,13 +20,13 @@ const Modal = ({ setOpenModal, players }) => {
 
     // To Get Players Items from Redux Store
     const teamsFromRedux = useSelector((state: state) => state?.team);
-    const playersFromRedux = teamsFromRedux.players.map((t) => t);
+    const playersFromRedux = teamsFromRedux?.players?.map((t) => t);
     const combinedPlayersFromRedux = playersFromRedux.flat(1);
 
     /**
      * Validation
      */
-    const filteredPlayers = players.filter((elem) => !combinedPlayersFromRedux.find(({ value }) => elem.first_name === value) && elem.first_name);
+    const filteredPlayers = players.filter((elem) => !combinedPlayersFromRedux?.find(({ value }) => elem.first_name === value) && elem.first_name);
     
 
     // Select Box Options
