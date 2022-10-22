@@ -116,7 +116,7 @@ img{
   width: 100vw;
   height: 120vh;
   background-color: rgb(33, 32, 32);
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   display: flex;
@@ -177,6 +177,11 @@ img{
   align-items: center;
 }
 
+.dropdown-heading,
+.dropdown-content{
+  color: black;
+}
+
 .modalContainer .footer button {
   width: 150px;
   height: 45px;
@@ -191,6 +196,9 @@ img{
 
 #cancelBtn {
   background-color: crimson;
+  width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .danger{

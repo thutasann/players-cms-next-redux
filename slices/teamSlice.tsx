@@ -3,13 +3,21 @@ import { createSlice } from "@reduxjs/toolkit";
 const teamSlice = createSlice({
     name: 'team',
     initialState: {
-        team: []
+        team: [],
+        players: []
     },
     reducers: {
         addTeam: (state, action ) => {
-            state.team.push({
-                ...action.payload
-            })
+            const itemExits = state.team.find((item) => item.name === action.payload.name);
+            if(itemExits){
+                alert(`Team ${action.payload.name} is already added`);
+            }
+            else{
+                state.team.push({
+                    ...action.payload
+                });
+                state.players.push(action.payload.player)
+            }
         },
 
         updateTeam: (state, action,) => {

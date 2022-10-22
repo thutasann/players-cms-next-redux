@@ -112,7 +112,7 @@ const Teams = ({ teams, players }) => {
                 ) : (
                     <>
                     
-                    <h3>Teams ({teams.length})</h3>
+                    <h3>Teams ({teams.length + teamsFromRedux?.team?.length})</h3>
 
                     {/* Teams from Redux */}
                     <div className='textFromRedux' style={{ marginBottom: "60px"}}>
@@ -157,7 +157,6 @@ const Teams = ({ teams, players }) => {
                                         <div className="card" key={i}>
                                             <h4>
                                                 <b>{team.full_name}</b>
-                                                <span className='danger'>Delete</span>
                                             </h4>
                                             <p>City : {team.city}</p>
                                             <p>Divistion: {team.division}</p>

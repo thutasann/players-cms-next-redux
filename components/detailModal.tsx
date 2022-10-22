@@ -5,6 +5,7 @@ import { updateTeam } from '../slices/teamSlice';
 const DetailModal = ({ setOpenModal, selectedTeam }) => {
 
     const [ updateForm, setUpdateForm ] = useState<boolean>(false);
+    const [ managePlayers, setManagePlayers ] = useState<boolean>(false);
     const dispatch = useDispatch();
 
     // Form Values
@@ -116,13 +117,23 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
 
                     {
                         !updateForm ? (
-                            <button
-                                onClick={() => {
-                                    setUpdateForm(true);
-                                }}
-                            >
-                                Edit
-                            </button>
+                            <>
+                                <button
+                                    onClick={() => {
+                                        setManagePlayers(true);
+                                    }}
+                                    id='cancelBtn'
+                                >
+                                    Manage Players
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setUpdateForm(true);
+                                    }}
+                                >
+                                    Edit
+                                </button>
+                            </>
                         ) : (
                             <button
                                 onClick={updateTeamSubmit}
