@@ -39,7 +39,6 @@ const Modal = ({ setOpenModal, players }) => {
         ){
             alert("Please enter all Inqueries carefully!");
         }else {
-            console.log("payload", values);
             dispatch(addTeam(values));
             setOpenModal(false);
         }
@@ -51,6 +50,7 @@ const Modal = ({ setOpenModal, players }) => {
         <div className="modalBackground">
                 <div className="modalContainer">
                 <div className="titleCloseBtn">
+                    x
                 </div>
                 <div className="title">
                     <h1>Add Team</h1>

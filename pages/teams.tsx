@@ -1,9 +1,10 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import ConfirmModal from '../components/ConfimDialog';
+import DetailModal from '../components/detailModal';
 import Modal from '../components/Modal';
 import { selectUser } from '../slices/userSlice';
 
@@ -16,10 +17,26 @@ const Teams = ({ teams, players }) => {
 
     const user = useSelector(selectUser);
     const [ openModal, setOpenModal ] = useState(false);
+    const [ openDetailModal, setOpenDetailModal ] = useState(false);
+    const [ openConfirmModal, setOpenConfirmModal ] = useState(false);
+    const [ selectedTeam, setSelectedTeam ] = useState(null);
+    const dispatch = useDispatch();
 
     // Teams Items from Redux Store
     const teamsFromRedux = useSelector((state: state) => state?.team);
-    console.log(teamsFromRedux)
+
+
+    // View Detail
+    const viewDetail = (team: any) => {
+        setOpenDetailModal(true);
+        setSelectedTeam(team);
+    }
+
+    // Open Confirm Modal box
+    const confirmModalOpen = (team : any) => {
+        setOpenConfirmModal(true);
+        setSelectedTeam(team);
+    }
     
     return (
         <div>
@@ -97,21 +114,27 @@ const Teams = ({ teams, players }) => {
                     
                     <h3>Teams ({teams.length})</h3>
 
+                    {/* Teams from Redux */}
                     <div className='textFromRedux' style={{ marginBottom: "60px"}}>
                         <h3 className='textLeft'>Newly Added Teams</h3>
                         <div className='container'>
                             {
-                                teamsFromRedux.team.length > 0 ? ( teamsFromRedux.team.map((team, i) => {
+                                teamsFromRedux.team?.length > 0 ? ( teamsFromRedux.team.map((team, i) => {
                                     return (
                                         <div className="card" key={i}>
                                             <h4>
                                                 <b>{team.name}</b>
-                                                <span className='danger'>🗑️ Delete</span>
+                                                <span 
+                                                    onClick={() => confirmModalOpen(team.name)}
+                                                    className='danger'
+                                                >Delete</span>
                                             </h4>
                                             <p>Player Count : {team.playerCount}</p>
                                             <p>Region: {team.region}</p>
                                             <p>Country: {team.country}</p>
-                                            <button>
+                                            <button
+                                                onClick={() => viewDetail(team)}
+                                            >
                                                 View Detail
                                             </button>
                                         </div>
@@ -124,6 +147,7 @@ const Teams = ({ teams, players }) => {
                         </div>
                     </div>
 
+                    {/* Teams From API */}
                     <div className='teamFromAPI'>
                         <h3 className='textLeft'>Teams from API</h3>
                         <div className='container'>
@@ -133,7 +157,7 @@ const Teams = ({ teams, players }) => {
                                         <div className="card" key={i}>
                                             <h4>
                                                 <b>{team.full_name}</b>
-                                                <span className='danger'>🗑️ Delete</span>
+                                                <span className='danger'>Delete</span>
                                             </h4>
                                             <p>City : {team.city}</p>
                                             <p>Divistion: {team.division}</p>
@@ -152,6 +176,24 @@ const Teams = ({ teams, players }) => {
             {
                 openModal && (
                     <Modal setOpenModal={setOpenModal} players={players}/>
+                )
+            }
+
+            {
+                openDetailModal && (
+                    <DetailModal 
+                        setOpenModal={setOpenDetailModal} 
+                        selectedTeam={selectedTeam}
+                    />
+                )
+            }
+
+            {
+                openConfirmModal && (
+                    <ConfirmModal
+                        setOpenModal={setOpenConfirmModal}
+                        selectedTeam={selectedTeam}
+                    />
                 )
             }
 
