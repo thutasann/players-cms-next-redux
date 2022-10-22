@@ -34,8 +34,7 @@ const Modal = ({ setOpenModal, players }) => {
             values.name == '' || values.name == undefined ||
             values.playerCount == '' || values.playerCount == undefined ||
             values.region == '' || values.region == undefined ||
-            values.country == '' || values.country == undefined ||
-            values.player == [] || values.player == undefined
+            values.country == '' || values.country == undefined
         ){
             alert("Please enter all Inqueries carefully!");
         }else {
