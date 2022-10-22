@@ -27,7 +27,7 @@ const DetailModal = ({ setOpenModal, selectedTeam, players }) => {
     const options = filteredPlayers.map((player) => {
         return{
             label: player.first_name,
-            value: player.first_name
+            value: player.id
         }
     });
 
@@ -192,7 +192,7 @@ const DetailContent = ({ selectedTeam, removePlayerFromTeam }) => {
                     <b>{selectedTeam.name}</b>
                 </h3>
                 <div style={{ fontSize: "20px", textAlign: 'left'}}>
-                    <p>Player Count : {selectedTeam.playerCount}</p>
+                    <p>Player Count : {selectedTeam?.player?.length}</p>
                     <p>Region: {selectedTeam.region}</p>
                     <p>Country: {selectedTeam.country}</p>
                 </div>
