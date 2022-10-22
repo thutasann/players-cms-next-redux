@@ -48,9 +48,6 @@ const Modal = ({ setOpenModal, players }) => {
     return (
         <div className="modalBackground">
                 <div className="modalContainer">
-                <div className="titleCloseBtn">
-                    x
-                </div>
                 <div className="title">
                     <h1>Add Team</h1>
                 </div>

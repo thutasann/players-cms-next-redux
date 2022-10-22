@@ -14,7 +14,7 @@ const ConfirmModal = ({ setOpenModal, selectedTeam }) => {
 
     return (
         <div className='modalBackground'>
-            <div className="modalContainer">
+            <div className="modalContainer" style={{ height: "auto"}}>
                 <div className="title">
                     <h1>Delete Team</h1>
                 </div>
