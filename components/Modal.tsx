@@ -18,14 +18,10 @@ const Modal = ({ setOpenModal, players }) => {
     const [ region, setRegion ] = useState('');
     const [ country, setCountry ] = useState('');
 
-    // To Get Players Items from Redux Store
+    // To Get Players from Redux Store and Validate
     const teamsFromRedux = useSelector((state: state) => state?.team);
-    const playersFromRedux = teamsFromRedux?.players?.map((t) => t);
+    const playersFromRedux = teamsFromRedux?.team?.map((t) => t.player.map((z) => z));
     const combinedPlayersFromRedux = playersFromRedux.flat(1);
-
-    /**
-     * Validation
-     */
     const filteredPlayers = players.filter((elem) => !combinedPlayersFromRedux?.find(({ value }) => elem.first_name === value) && elem.first_name);
     
 
@@ -42,13 +38,12 @@ const Modal = ({ setOpenModal, players }) => {
 
     const addTeamSubmit = (e) => {
         e.preventDefault();
-        console.log("Payload player", player);
         const values = { name, playerCount, region, country, player};
         if(
             values.name == '' || values.name == undefined ||
             values.playerCount == '' || values.playerCount == undefined ||
             values.region == '' || values.region == undefined ||
-            values.country == '' || values.country == undefined
+            values.country == '' || values.country == undefined || !player
         ){
             alert("Please enter all Inqueries carefully!");
         }else {

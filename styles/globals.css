@@ -73,6 +73,12 @@ button{
   margin-left: 20px;
 }
 
+.dropdown-container,
+.dropdown-heading-value,
+.dropdown-heading{
+  color: black;
+}
+
 button:hover{
   background-color: #0c81ff79;
 }
@@ -178,7 +184,7 @@ img{
 }
 
 .dropdown-heading,
-.dropdown-content{
+.dropdown-content *{
   color: black;
 }
 
