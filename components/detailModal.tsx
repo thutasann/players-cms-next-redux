@@ -20,7 +20,7 @@ const DetailModal = ({ setOpenModal, selectedTeam, players }) => {
     const teamsFromRedux = useSelector((state: state) => state?.team);
     const playersFromRedux = teamsFromRedux?.team?.map((t) => t.player.map((z) => z));
     const combinedPlayersFromRedux = playersFromRedux.flat(1);
-    const filteredPlayers = players.filter((elem) => !combinedPlayersFromRedux?.find(({ value }) => elem.first_name === value) && elem.first_name);
+    const filteredPlayers = players.filter((elem) => !combinedPlayersFromRedux?.find(({ value }) => elem.id === value) && elem.id);
 
 
     // Select Box Options
