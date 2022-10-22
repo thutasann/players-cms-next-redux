@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ConfirmModal from '../components/ConfimDialog';
 import DetailModal from '../components/detailModal';
@@ -22,7 +22,7 @@ const Teams = ({ teams, players }) => {
     const [ selectedTeam, setSelectedTeam ] = useState(null);
     const dispatch = useDispatch();
 
-    // Teams Items from Redux Store
+
     const teamsFromRedux = useSelector((state: state) => state?.team);
 
 
@@ -129,7 +129,7 @@ const Teams = ({ teams, players }) => {
                                                     className='danger'
                                                 >Delete</span>
                                             </h4>
-                                            <p>Player Count : {team.playerCount}</p>
+                                            <p>Player Count : {team.player.length}</p>
                                             <p>Region: {team.region}</p>
                                             <p>Country: {team.country}</p>
                                             <button
@@ -183,6 +183,7 @@ const Teams = ({ teams, players }) => {
                     <DetailModal 
                         setOpenModal={setOpenDetailModal} 
                         selectedTeam={selectedTeam}
+                        players={players}
                     />
                 )
             }

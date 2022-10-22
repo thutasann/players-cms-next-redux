@@ -1,12 +1,36 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { updateTeam } from '../slices/teamSlice';
+import { MultiSelect } from 'react-multi-select-component';
+import { useDispatch, useSelector } from 'react-redux'
+import { removePlayer, updateTeam } from '../slices/teamSlice';
 
-const DetailModal = ({ setOpenModal, selectedTeam }) => {
+
+interface state{
+    team: any,
+    player: any
+}
+
+// players -> Players From API
+
+const DetailModal = ({ setOpenModal, selectedTeam, players }) => {
 
     const [ updateForm, setUpdateForm ] = useState<boolean>(false);
-    const [ managePlayers, setManagePlayers ] = useState<boolean>(false);
     const dispatch = useDispatch();
+
+    // To Get Players from Redux Store and Validate
+    const teamsFromRedux = useSelector((state: state) => state?.team);
+    const playersFromRedux = teamsFromRedux?.team?.map((t) => t.player.map((z) => z));
+    const combinedPlayersFromRedux = playersFromRedux.flat(1);
+    const filteredPlayers = players.filter((elem) => !combinedPlayersFromRedux?.find(({ value }) => elem.first_name === value) && elem.first_name);
+
+
+    // Select Box Options
+    const options = filteredPlayers.map((player) => {
+        return{
+            label: player.first_name,
+            value: player.first_name
+        }
+    });
+
 
     // Form Values
     const [ name, setName ] = useState(selectedTeam?.name);
@@ -14,7 +38,6 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
     const [ country, setCountry ] = useState(selectedTeam?.country);
     const [ player, setPlayer] = useState(selectedTeam?.player);
     const playerCount = selectedTeam?.player?.length;
-
 
 
     // Update Team submit
@@ -31,6 +54,13 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
             dispatch(updateTeam(values));
             setOpenModal(false);
         }
+    }
+
+
+    // Remove Player From Team
+    const removePlayerFromTeam = (value: any) => {
+        dispatch(removePlayer(value));
+        setOpenModal(false);
     }
 
     return (
@@ -50,11 +80,11 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
                     </button>
                 </div>
 
-
                 {
                     updateForm ? (
                         <div className='body'>
                             <form
+                                className='card'
                                 style={{
                                     display: 'flex',
                                     flexDirection: 'column',
@@ -63,7 +93,9 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
                                     paddingRight: "30px",
                                     width: "100%",
                                     fontSize: "20px",
-                                    textAlign: 'left'
+                                    border: "1px solid #000",
+                                    textAlign: 'left',
+                                    paddingBottom: "50px"
                                 }}
                             >
                                 <label style={{marginTop: '30px', color: 'black'}}>Team Name</label>
@@ -90,11 +122,21 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
                                     placeholder="Enter Country"
                                     onChange={(e) => setCountry(e.target.value)}
                                 />
+
+                                <label style={{marginTop: '30px', color: 'black'}}>Pick Players</label>
+                                <MultiSelect
+                                    options={options}
+                                    value={player}
+                                    onChange={setPlayer}
+                                    labelledBy="Select"
+                                />
+
                             </form>
                         </div>
                     ) : (
                         <DetailContent
                             selectedTeam={selectedTeam}
+                            removePlayerFromTeam={removePlayerFromTeam}
                         />
                     )
                 }
@@ -120,14 +162,6 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
                             <>
                                 <button
                                     onClick={() => {
-                                        setManagePlayers(true);
-                                    }}
-                                    id='cancelBtn'
-                                >
-                                    Manage Players
-                                </button>
-                                <button
-                                    onClick={() => {
                                         setUpdateForm(true);
                                     }}
                                 >
@@ -143,12 +177,14 @@ const DetailModal = ({ setOpenModal, selectedTeam }) => {
                         )
                     }
                 </div>
+
+                
             </div>
         </div>
     )
 }
 
-const DetailContent = ({ selectedTeam }) => {
+const DetailContent = ({ selectedTeam, removePlayerFromTeam }) => {
     return (
         <div className='body'>
             <div className="card" style={{ color: "black", border: "1px solid #000", width: "100%", cursor: "auto"}}>
@@ -166,8 +202,14 @@ const DetailContent = ({ selectedTeam }) => {
                     <ol style={{ textAlign: 'left', marginLeft: "-20px"}}>
                         {
                             selectedTeam.player?.map((player, i) => (
-                                <li key={i}>
+                                <li key={i} style={{display:'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: "-15px"}}>
                                     {player.label}
+
+                                    <span
+                                        className='danger'
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => removePlayerFromTeam(player.value)}
+                                    >Remove</span>
                                 </li>
                             ))
                         }

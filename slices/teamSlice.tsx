@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const teamSlice = createSlice({
     name: 'team',
     initialState: {
         team: [],
-        players: []
     },
     reducers: {
         addTeam: (state, action ) => {
@@ -16,7 +16,7 @@ const teamSlice = createSlice({
                 state.team.push({
                     ...action.payload
                 });
-                state.players.push(action.payload.player)
+                // state.players.push(action.payload.player)
             }
         },
 
@@ -36,12 +36,21 @@ const teamSlice = createSlice({
             state.team.splice(index, 1);
         },
 
+        removePlayer: (state, action) => {
+            const index = state.team.map((t) => t.player.findIndex((p) => p.value === action.payload))
+            state.team.map((t) => {
+                t.player.splice(index, 1);
+                t.playerCount--;
+            });
+        }
+
     },
 });
 
 export const {
     addTeam,
     removeTeam,
-    updateTeam
+    updateTeam,
+    removePlayer
 } = teamSlice.actions;
 export default teamSlice.reducer;
